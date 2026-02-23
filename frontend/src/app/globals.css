@@ -1,0 +1,1485 @@
+:root {
+  --bg: #f8f8fb;
+  --surface: #ffffff;
+  --line: #e4e5ea;
+  --text: #1d1c1d;
+  --muted: #696874;
+  --left: #3f0e40;
+  --left-light: #522653;
+  --left-text: #f9ecff;
+  --active: #1164a3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.authShell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.authCard {
+  width: min(420px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.authCard h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.sub {
+  margin: 6px 0 16px;
+  color: var(--muted);
+}
+
+.slackShell {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: var(--left-pane-width, 290px) 6px minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.leftPaneResizer {
+  cursor: col-resize;
+  background: transparent;
+}
+
+.leftPaneResizer:hover {
+  background: #d8e2f0;
+}
+
+.leftRail {
+  background: linear-gradient(180deg, var(--left) 0%, #3a0d3b 100%);
+  color: var(--left-text);
+  padding: 14px 12px;
+  display: grid;
+  grid-template-rows: auto 1fr 1fr;
+  gap: 12px;
+  border-right: 1px solid #2f0b2f;
+  overflow: hidden;
+}
+
+.workspaceBox {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.workspaceBox h1 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.workspaceBox p {
+  margin: 4px 0 8px;
+  color: #dac7dd;
+}
+
+.taskBotReceiveControl {
+  margin: 0 0 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #dac7dd;
+  font-size: 12px;
+}
+
+.taskBotReceiveControl input[type="checkbox"] {
+  width: 16px;
+  min-height: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.ghostButton {
+  background: transparent;
+  color: var(--left-text);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.railSection {
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 8px;
+}
+
+.railSection h2 {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.railSectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.railToggleButton {
+  width: 26px;
+  min-width: 26px;
+  min-height: 26px;
+  padding: 0;
+  border-radius: 999px;
+  font-size: 18px;
+  line-height: 1;
+  color: #e8d7e8;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.railToggleButton:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.compactStack {
+  margin-bottom: 0;
+}
+
+.listSlim {
+  overflow: auto;
+  padding-right: 4px;
+  display: grid;
+  gap: 2px;
+  align-content: start;
+  grid-auto-rows: min-content;
+}
+
+.listSlim button {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: transparent;
+  border-color: transparent;
+  color: #e8d7e8;
+  min-height: 30px;
+  padding: 4px 8px;
+}
+
+.threadLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.unreadBadge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background: #2ea9ff;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.listSlim button:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.listSlim button.active {
+  background: var(--active);
+  color: #fff;
+}
+
+.mainPane {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: #fff;
+  min-width: 0;
+  min-height: 0;
+}
+
+.chatHeader {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatHeader h2 {
+  margin: 2px 0 0;
+  font-size: 21px;
+}
+
+.headerTabs {
+  display: flex;
+  gap: 8px;
+}
+
+.tabButton {
+  width: auto;
+  min-height: 34px;
+  padding: 6px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+}
+
+.activeTab {
+  background: #1264a3;
+  color: #fff;
+  border-color: #1264a3;
+}
+
+.tabBadge {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: #fff;
+  color: #1264a3;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.messagesPane {
+  overflow: auto;
+  padding: 12px 18px;
+  min-height: 0;
+  padding-bottom: 90px;
+}
+
+.threadWorkspace {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 6px var(--reply-pane-width, 320px);
+}
+
+.threadWorkspace.replyClosed {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.replyPaneResizer {
+  cursor: col-resize;
+  background: transparent;
+}
+
+.replyPaneResizer:hover {
+  background: #d8e2f0;
+}
+
+.messageRow {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.clickableMessage {
+  cursor: pointer;
+}
+
+.clickableMessage:hover {
+  background: #f7f9fc;
+}
+
+.selectedMessage {
+  background: #eef5fd;
+}
+
+.taskSourceMessage {
+  box-shadow: inset 3px 0 0 #2ea9ff;
+  background: #f3f8ff;
+}
+
+.messageQuickActions {
+  margin-top: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+}
+
+.messageRow:hover .messageQuickActions,
+.selectedMessage .messageQuickActions,
+.messageQuickActions.hasReplies {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.replyQuickButton {
+  width: auto;
+  min-height: 24px;
+  min-width: 28px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid #cfd9ea;
+  background: #f6f9ff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #3f4a67;
+}
+
+.replyQuickButton:hover {
+  background: #edf4ff;
+}
+
+.replyQuickCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: #dfeafc;
+  color: #285992;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.replyPane {
+  border-left: 1px solid var(--line);
+  background: #fbfcfe;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.threadWorkspace.replyClosed .replyPane {
+  display: none;
+}
+
+.threadWorkspace.replyClosed .replyPaneResizer {
+  display: none;
+}
+
+.replyParent {
+  padding: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.replyHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.replyCloseButton {
+  width: auto;
+  min-height: 28px;
+  min-width: 28px;
+  padding: 2px 8px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.replyList {
+  overflow: auto;
+  padding: 12px 18px;
+  min-height: 0;
+}
+
+.replyRow {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.replyMessageRow {
+  background: transparent;
+  border: 0;
+  margin-bottom: 14px;
+}
+
+.replyComposer {
+  border-top: 1px solid var(--line);
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px;
+}
+
+.replyInputWrap {
+  position: relative;
+}
+
+.replyComposer textarea {
+  width: 100%;
+  resize: none;
+  min-height: 40px;
+  max-height: 110px;
+  line-height: 1.4;
+  overflow-y: hidden;
+  padding-right: 72px;
+}
+
+.replyComposer button {
+  width: auto;
+  min-width: 72px;
+}
+
+.replyEmpty {
+  display: grid;
+  align-content: start;
+  justify-items: end;
+  gap: 12px;
+  padding: 14px;
+}
+
+.replyEmpty .meta {
+  width: 100%;
+  text-align: center;
+}
+
+.taskQuickPane {
+  padding: 12px;
+  overflow: auto;
+}
+
+.taskQuickPane h3 {
+  margin: 4px 0 10px;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: #611f69;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.avatarImage {
+  overflow: hidden;
+  background: transparent;
+}
+
+.avatarImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.messageHead {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  position: relative;
+}
+
+.messageHead span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.usernameText {
+  display: inline-block;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+.messageBody {
+  margin: 3px 0 0;
+  line-height: 1.42;
+  white-space: pre-wrap;
+}
+
+.taskLinkedMessage {
+  cursor: pointer;
+}
+
+.taskLinkedMessage:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.taskMessageBadge {
+  width: auto;
+  min-height: 22px;
+  min-width: 22px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.taskMessageBadge.open {
+  background: #edf5ff;
+  border-color: #c5defd;
+  color: #1d4f86;
+}
+
+.taskMessageBadge.doing {
+  background: #fff7e8;
+  border-color: #f3d49d;
+  color: #8a5a00;
+}
+
+.taskMessageBadge.done {
+  background: #edf9f1;
+  border-color: #bfe6cc;
+  color: #1f6a3a;
+}
+
+.messageBody code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background: #eef2f8;
+  border: 1px solid #d7dfe9;
+  border-radius: 6px;
+  padding: 0 4px;
+  font-size: 0.92em;
+}
+
+.messageBody pre {
+  margin: 8px 0;
+  padding: 10px 12px;
+  background: #0f1724;
+  color: #dbe6ff;
+  border-radius: 8px;
+  overflow: auto;
+  white-space: pre;
+}
+
+.messageBody pre code {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  color: inherit;
+}
+
+.checkList {
+  margin: 6px 0;
+  padding-left: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.checkList li {
+  list-style: none;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.checkList input[type="checkbox"] {
+  width: 14px;
+  min-height: 14px;
+  height: 14px;
+  margin: 2px 0 0;
+}
+
+.checkList input[type="checkbox"].readOnlyChecklist {
+  cursor: not-allowed;
+}
+
+.messageContent {
+  min-width: 0;
+}
+
+.messageHeadActions {
+  margin-left: 6px;
+  position: relative;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+}
+
+.messageOwnRow:hover .messageHeadActions,
+.messageOwnRow.menuOpen .messageHeadActions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.messageMenuButton {
+  width: auto;
+  min-height: 24px;
+  min-width: 30px;
+  padding: 2px 8px;
+  line-height: 1;
+}
+
+.messageMenu {
+  position: absolute;
+  top: 28px;
+  right: 0;
+  z-index: 6;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(20, 25, 40, 0.12);
+  padding: 4px;
+}
+
+.messageMenu button {
+  width: auto;
+  min-height: 28px;
+  padding: 4px 10px;
+}
+
+.messageMenuIconButton {
+  min-width: 32px;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 1;
+  padding: 4px 8px;
+}
+
+.inlineEditor {
+  margin-top: 6px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid #cfd9ea;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.inlineEditor textarea {
+  resize: vertical;
+  min-height: 72px;
+  border-color: #9bc7ef;
+}
+
+.inlineEditorActions {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.inlineEditor button {
+  width: auto;
+  min-height: 30px;
+  padding: 4px 10px;
+}
+
+.editableMessage {
+  border-radius: 6px;
+  transition: background-color 0.12s ease;
+}
+
+.editableMessage:hover {
+  background: #f3f6fc;
+  cursor: pointer;
+}
+
+.composer {
+  padding: 10px 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 90px;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  z-index: 2;
+}
+
+.composerInputWrap {
+  position: relative;
+}
+
+.composer textarea {
+  width: 100%;
+  resize: none;
+  min-height: 74px;
+  max-height: 160px;
+  line-height: 1.4;
+  overflow-y: hidden;
+  padding-top: 34px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.composerHint {
+  grid-column: 1 / 2;
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.replyComposerHint {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sendIconButton {
+  width: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  background: #1264a3;
+  border-color: #1264a3;
+  color: #fff;
+}
+
+.sendIconButton:disabled {
+  opacity: 0.5;
+}
+
+.composerTaskPill {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: auto;
+  min-height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid #cfd9ea;
+  background: #f6f9ff;
+  color: #37507f;
+  font-size: 12px;
+}
+
+.composerTaskPill.active {
+  background: #1264a3;
+  color: #fff;
+  border-color: #1264a3;
+}
+
+.messageTaskPill {
+  left: 8px;
+  right: auto;
+  top: 6px;
+  bottom: auto;
+}
+
+.replyTaskPill {
+  bottom: 7px;
+}
+
+.composerToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.composerToggle input[type="checkbox"] {
+  width: 16px;
+  min-height: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0;
+}
+
+label {
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.dashboardPane {
+  padding: 12px 18px;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 10px;
+}
+
+.activityList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.dashboardFilterBar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.dashboardFilterMain {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.dashboardFilterActions {
+  width: 36px;
+  min-width: 36px;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.dashboardAddTaskPlaceholder {
+  width: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  display: inline-block;
+}
+
+.dashboardFilterBar .meta {
+  margin: 0;
+}
+
+.dashboardScopeBlock {
+  display: grid;
+  gap: 2px;
+  min-width: 260px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #c8d8ee;
+  background: #f4f8ff;
+}
+
+.dashboardScopeHead {
+  font-size: 11px;
+  color: #4d6489;
+}
+
+.dashboardScopeValue {
+  color: #1d3152;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.dashboardFilterBar label {
+  width: auto;
+  min-width: 180px;
+}
+
+.dashboardFilterBar select {
+  min-height: 32px;
+}
+
+.dashboardAddTaskButton {
+  width: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
+  border-radius: 999px;
+  font-size: 24px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboardTaskCreateOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 28, 48, 0.34);
+  display: grid;
+  place-items: center;
+  z-index: 20;
+}
+
+.dashboardTaskCreateCard {
+  width: min(560px, calc(100vw - 40px));
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+  box-shadow: 0 20px 50px rgba(27, 36, 58, 0.2);
+}
+
+.dashboardTaskCreateHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboardTaskCreateHead .meta {
+  margin-right: auto;
+}
+
+.dashboardTaskCreateCard textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.dashboardTaskCreateActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.dashboardTaskCreateActions button {
+  width: auto;
+  min-height: 34px;
+  padding: 4px 12px;
+}
+
+.dashboardBoardWorkspace {
+  min-height: 0;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 6px var(--task-pane-width, 340px);
+  gap: 12px;
+}
+
+.dashboardBoardWorkspace.detailClosed {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.taskPaneResizer {
+  cursor: col-resize;
+  background: transparent;
+  margin: 0 -6px;
+}
+
+.taskPaneResizer:hover {
+  background: #d8e2f0;
+}
+
+.selectedTaskCard {
+  background: #e7f1ff;
+  border-color: #6faef2;
+  box-shadow: inset 0 0 0 1px #6faef2, 0 0 0 2px rgba(111, 174, 242, 0.2);
+}
+
+.taskDetailPane {
+  border-left: 1px solid var(--line);
+  border-radius: 0;
+  background: #fbfcfe;
+  padding: 12px;
+  min-height: 0;
+  height: 100%;
+  overflow: auto;
+}
+
+.dashboardBoardWorkspace.detailClosed .taskDetailPane {
+  display: none;
+}
+
+.dashboardBoardWorkspace.detailClosed .taskPaneResizer {
+  display: none;
+}
+
+.taskDetailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+}
+
+.taskDetailHeader .meta {
+  margin-right: auto;
+}
+
+.taskDetailCloseButton {
+  width: auto;
+  min-height: 28px;
+  min-width: 28px;
+  padding: 2px 8px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.taskDetailEditButton {
+  width: auto;
+  min-height: 28px;
+  min-width: 28px;
+  padding: 2px 8px;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.taskDetailDeleteButton {
+  width: auto;
+  min-height: 28px;
+  min-width: 28px;
+  padding: 2px 8px;
+  font-size: 15px;
+  line-height: 1;
+  color: #8b2e2e;
+  border-color: #e4c3c3;
+  background: #fff5f5;
+}
+
+.taskDetailDeleteButton:hover {
+  background: #ffeaea;
+}
+
+.taskDetailPane h3 {
+  margin: 6px 0 10px;
+}
+
+.taskEditForm {
+  display: grid;
+  gap: 8px;
+}
+
+.taskEditForm textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.taskInlineTitleInput {
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid #9bc7ef;
+  background: #f4f9ff;
+}
+
+.taskInlineNoteInput {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  border: 1px solid #9bc7ef;
+  background: #f4f9ff;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font: inherit;
+}
+
+.editingNoteBlock {
+  border: 1px dashed #9bc7ef;
+  border-radius: 8px;
+  padding: 8px;
+  background: #fbfdff;
+}
+
+.taskNoteBlock {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.taskDetailStatus {
+  margin: 6px 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.taskStatusSelectLabel {
+  width: auto;
+  min-width: 130px;
+}
+
+.taskStatusSelectLabel select {
+  min-height: 30px;
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.taskMetaGrid {
+  display: grid;
+  gap: 8px;
+  margin: 4px 0 8px;
+}
+
+.taskMetaItem {
+  background: #f6f8fc;
+  border: 1px solid #dfe5f1;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.taskMetaValue {
+  margin: 2px 0 0;
+  color: #1f2c45;
+  font-size: 13px;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.taskCreatorPill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid #c9d8ef;
+  background: #eef5ff;
+  color: #214c80;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.statusBadge.open {
+  background: #edf5ff;
+  border-color: #c5defd;
+  color: #1d4f86;
+}
+
+.statusBadge.doing {
+  background: #fff7e8;
+  border-color: #f3d49d;
+  color: #8a5a00;
+}
+
+.statusBadge.done {
+  background: #edf9f1;
+  border-color: #bfe6cc;
+  color: #1f6a3a;
+}
+
+.taskBoard {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  min-height: 0;
+  height: 100%;
+}
+
+.taskColumn {
+  background: #f6f7fb;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 0;
+}
+
+.taskColumn ul {
+  min-height: 0;
+  overflow: auto;
+  align-content: start;
+  gap: 2px;
+}
+
+.taskColumn h3 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.taskColumn h3 span {
+  background: #dbe2f3;
+  color: #334a7d;
+  border-radius: 10px;
+  padding: 1px 8px;
+  font-size: 11px;
+}
+
+.activityCard {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.dashboardTaskCard {
+  padding: 10px 10px;
+  border-radius: 8px;
+  min-height: 86px;
+}
+
+.dashboardTaskCard p {
+  margin: 0;
+}
+
+.dashboardTaskCard .meta {
+  margin-top: 4px;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.taskCardMetaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.taskCardActions {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.taskCardThreadLink {
+  display: inline-block;
+  width: auto;
+  flex: 0 1 auto;
+  max-width: calc(100% - 36px);
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  min-height: 0;
+  min-width: 0;
+  text-align: left;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.taskCardThreadLink:hover {
+  color: #1d4f86;
+  text-decoration: underline;
+}
+
+.taskCardDeleteButton {
+  width: 24px;
+  min-height: 24px;
+  min-width: 24px;
+  padding: 0;
+  border-radius: 999px;
+  font-size: 13px;
+  line-height: 1;
+  color: #8b2e2e;
+  border-color: #e4c3c3;
+  background: #fff5f5;
+}
+
+.taskCardDeleteButton:hover {
+  background: #ffeaea;
+}
+
+.taskCardNotePreview {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #4f5f7a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.taskCard {
+  cursor: grab;
+}
+
+.taskCard:hover {
+  border-color: #aab6d6;
+}
+
+.taskCard:active {
+  cursor: grabbing;
+}
+
+.activityCard.dragging {
+  opacity: 0.45;
+}
+
+.clickableCard {
+  cursor: pointer;
+}
+
+.messageFocus {
+  outline: 2px solid #2ea9ff;
+  border-radius: 8px;
+  transition: outline-color 0.6s ease;
+}
+
+.taskActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.taskActions button {
+  width: auto;
+  min-height: 30px;
+  padding: 4px 10px;
+}
+
+.iconAction {
+  min-width: 34px;
+  min-height: 34px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.statusActionButton {
+  width: auto;
+  min-width: 78px;
+  padding: 0 12px;
+  font-size: 13px;
+  gap: 6px;
+}
+
+.iconAction.open {
+  background: #edf5ff;
+  border-color: #c5defd;
+  color: #1d4f86;
+}
+
+.iconAction.doing {
+  background: #fff7e8;
+  border-color: #f3d49d;
+  color: #8a5a00;
+}
+
+.iconAction.done {
+  background: #edf9f1;
+  border-color: #bfe6cc;
+  color: #1f6a3a;
+}
+
+.iconAction.jump {
+  background: #f3f5fb;
+  border-color: #d4daea;
+  color: #3e4a67;
+}
+
+.openMessageAction {
+  width: auto;
+  min-width: 132px;
+  font-size: 13px;
+}
+
+.stack {
+  display: grid;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 4px;
+}
+
+input,
+textarea,
+select,
+button {
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: #fff;
+}
+
+button.active {
+  background: #dceeff;
+  border-color: #9bc7ef;
+}
+
+.error {
+  margin: 0;
+  color: #cf2d2d;
+}
+
+@media (max-width: 1180px) {
+  .slackShell {
+    grid-template-columns: minmax(240px, var(--left-pane-width, 260px)) 6px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 840px) {
+  .slackShell {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .leftPaneResizer {
+    display: none;
+  }
+
+  .leftRail {
+    grid-template-rows: auto;
+  }
+
+  .railSection {
+    grid-template-rows: auto auto auto;
+  }
+
+  .listSlim {
+    max-height: 160px;
+  }
+
+  .taskBoard {
+    grid-template-columns: 1fr;
+  }
+
+  .threadWorkspace {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboardBoardWorkspace {
+    grid-template-columns: 1fr;
+  }
+
+  .replyPane {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    min-height: 220px;
+  }
+}
