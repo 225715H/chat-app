@@ -1,9 +1,14 @@
+import fs from "fs";
 import path from "path";
 import sqlite3 from "sqlite3";
 
 const dbPath = process.env.DB_FILE
   ? path.resolve(process.env.DB_FILE)
   : path.resolve(__dirname, "../data.sqlite");
+const dbDir = path.dirname(dbPath);
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
+}
 export const db = new sqlite3.Database(dbPath);
 
 export function run(sql: string, params: unknown[] = []): Promise<{ lastID: number; changes: number }> {
