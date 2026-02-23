@@ -2,12 +2,22 @@ import fs from "fs";
 import path from "path";
 import sqlite3 from "sqlite3";
 
-const dbPath = process.env.DB_FILE
+const requestedDbPath = process.env.DB_FILE
   ? path.resolve(process.env.DB_FILE)
   : path.resolve(__dirname, "../data.sqlite");
-const dbDir = path.dirname(dbPath);
-if (!fs.existsSync(dbDir)) {
-  fs.mkdirSync(dbDir, { recursive: true });
+let dbPath = requestedDbPath;
+try {
+  const dbDir = path.dirname(requestedDbPath);
+  if (!fs.existsSync(dbDir)) {
+    fs.mkdirSync(dbDir, { recursive: true });
+  }
+} catch {
+  // Render free instances may reject paths like /var/data.
+  dbPath = path.resolve("/tmp/data.sqlite");
+  const fallbackDir = path.dirname(dbPath);
+  if (!fs.existsSync(fallbackDir)) {
+    fs.mkdirSync(fallbackDir, { recursive: true });
+  }
 }
 export const db = new sqlite3.Database(dbPath);
 
