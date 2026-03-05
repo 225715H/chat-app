@@ -14,6 +14,7 @@ type TaskStatus = "open" | "doing" | "done";
 type TaskItem = {
   id: number;
   message_id: number;
+  source_reply_id: number | null;
   channel_id: number;
   thread_id: number;
   created_by: number;
@@ -382,6 +383,32 @@ export default function Home() {
     }
     return map;
   }, [tasks]);
+  const parentTaskByMessageId = useMemo(() => {
+    const map = new Map<number, TaskItem>();
+    for (const task of tasks) {
+      if (task.source_reply_id == null) {
+        map.set(task.message_id, task);
+      }
+    }
+    return map;
+  }, [tasks]);
+  const replyTaskCountByMessageId = useMemo(() => {
+    const map = new Map<number, number>();
+    for (const task of tasks) {
+      if (task.source_reply_id != null) {
+        map.set(task.message_id, (map.get(task.message_id) || 0) + 1);
+      }
+    }
+    return map;
+  }, [tasks]);
+  const selectedMessageParentTask = useMemo(
+    () => (selectedMessage ? parentTaskByMessageId.get(selectedMessage.id) ?? null : null),
+    [selectedMessage, parentTaskByMessageId],
+  );
+  const selectedMessageReplyTaskCount = useMemo(
+    () => (selectedMessage ? replyTaskCountByMessageId.get(selectedMessage.id) || 0 : 0),
+    [selectedMessage, replyTaskCountByMessageId],
+  );
   const activityEntries = useMemo(
     () =>
       [...activityThreadOrder, ...Object.keys(unreadByThread).map(Number)]
@@ -1442,7 +1469,8 @@ export default function Home() {
             >
               <div className="messagesPane" ref={messagesPaneRef}>
                 {visibleMessages.map((m) => {
-                  const linkedTask = taskByMessageId.get(m.id);
+                  const linkedTask = parentTaskByMessageId.get(m.id);
+                  const taskCount = replyTaskCountByMessageId.get(m.id) || 0;
                   return (
                   <article
                     key={m.id}
@@ -1468,6 +1496,20 @@ export default function Home() {
                             aria-label="Open task detail"
                           >
                             {linkedTask.status === "open" ? "Task • Open" : linkedTask.status === "doing" ? "Task • Doing" : "Task • Done"}
+                          </button>
+                        ) : null}
+                        {!linkedTask && taskCount > 0 ? (
+                          <button
+                            type="button"
+                            className="taskReplyBadge"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openTaskDetailFromMessage(m.id);
+                            }}
+                            title="Open reply task detail"
+                            aria-label="Open reply task detail"
+                          >
+                            Replies • Task {taskCount}
                           </button>
                         ) : null}
                         {m.user_id === user.id ? (
@@ -1555,6 +1597,18 @@ export default function Home() {
                           ↩
                           {m.reply_count > 0 ? <span className="replyQuickCount">{m.reply_count}</span> : null}
                         </button>
+                        {taskCount > 0 ? (
+                          <button
+                            type="button"
+                            className="taskQuickCountButton"
+                            onClick={() => openTaskDetailFromMessage(m.id)}
+                            title="Open task detail"
+                            aria-label="Open task detail"
+                          >
+                            ☑
+                            <span className="replyQuickCount">{taskCount}</span>
+                          </button>
+                        ) : null}
                       </div>
                     </div>
                   </article>
@@ -1695,6 +1749,38 @@ export default function Home() {
                           {selectedMessage.user_name}
                         </strong>
                         <span>{formatDateTime(selectedMessage.created_at)}</span>
+                        {selectedMessageParentTask ? (
+                          <button
+                            type="button"
+                            className={`taskMessageBadge ${selectedMessageParentTask.status}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openTaskDetailFromMessage(selectedMessage.id);
+                            }}
+                            title="Open task detail"
+                            aria-label="Open task detail"
+                          >
+                            {selectedMessageParentTask.status === "open"
+                              ? "Task • Open"
+                              : selectedMessageParentTask.status === "doing"
+                                ? "Task • Doing"
+                                : "Task • Done"}
+                          </button>
+                        ) : null}
+                        {selectedMessageReplyTaskCount > 0 ? (
+                          <button
+                            type="button"
+                            className="taskReplyBadge"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openTaskDetailFromMessage(selectedMessage.id);
+                            }}
+                            title="Open task detail"
+                            aria-label="Open task detail"
+                          >
+                            Task {selectedMessageReplyTaskCount}
+                          </button>
+                        ) : null}
                       </p>
                       <div className="messageBody">
                         {renderMessageContent(selectedMessage.content, `selected-${selectedMessage.id}`)}

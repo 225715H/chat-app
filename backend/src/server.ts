@@ -26,6 +26,7 @@ type TaskStatus = "open" | "doing" | "done";
 type TaskRow = {
   id: number;
   message_id: number;
+  source_reply_id: number | null;
   channel_id: number;
   thread_id: number;
   created_by: number;
@@ -749,9 +750,9 @@ app.post("/messages/:messageId/replies", requireAuth, async (req: AuthRequest, r
     const threadInfo = await get<{ channel_id: number }>("SELECT channel_id FROM threads WHERE id = ?", [parent.thread_id]);
     if (threadInfo) {
       const inserted = await run(
-        `INSERT OR IGNORE INTO tasks (message_id, channel_id, thread_id, created_by, title, note, status)
-         VALUES (?, ?, ?, ?, ?, ?, 'open')`,
-        [messageId, threadInfo.channel_id, parent.thread_id, req.user.id, taskTitle, taskNote],
+        `INSERT OR IGNORE INTO tasks (message_id, source_reply_id, channel_id, thread_id, created_by, title, note, status)
+         VALUES (?, ?, ?, ?, ?, ?, ?, 'open')`,
+        [messageId, reply.id, threadInfo.channel_id, parent.thread_id, req.user.id, taskTitle, taskNote],
       );
       if (inserted.changes > 0) {
         const task = await get<TaskRow>(

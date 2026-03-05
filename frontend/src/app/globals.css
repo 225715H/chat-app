@@ -367,6 +367,24 @@ body {
   font-weight: 700;
 }
 
+.taskQuickCountButton {
+  width: auto;
+  min-height: 24px;
+  min-width: 28px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid #d2dbe9;
+  background: #f5f8ff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #375274;
+}
+
+.taskQuickCountButton:hover {
+  background: #edf4ff;
+}
+
 .replyPane {
   border-left: 1px solid var(--line);
   background: #fbfcfe;
@@ -561,6 +579,20 @@ body {
   background: #edf9f1;
   border-color: #bfe6cc;
   color: #1f6a3a;
+}
+
+.taskReplyBadge {
+  width: auto;
+  min-height: 20px;
+  min-width: 20px;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid #cfd8ea;
+  background: #f5f8ff;
+  color: #415679;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 600;
 }
 
 .messageBody code {

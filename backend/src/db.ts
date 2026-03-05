@@ -141,6 +141,7 @@ export async function initDb() {
     `CREATE TABLE IF NOT EXISTS tasks (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       message_id INTEGER NOT NULL UNIQUE,
+      source_reply_id INTEGER,
       channel_id INTEGER NOT NULL,
       thread_id INTEGER NOT NULL,
       created_by INTEGER NOT NULL,
@@ -177,6 +178,9 @@ export async function initDb() {
   }
   if (!(await columnExists("tasks", "note"))) {
     await run("ALTER TABLE tasks ADD COLUMN note TEXT NOT NULL DEFAULT ''");
+  }
+  if (!(await columnExists("tasks", "source_reply_id"))) {
+    await run("ALTER TABLE tasks ADD COLUMN source_reply_id INTEGER");
   }
   const existing = await get<{ count: number }>("SELECT COUNT(*) as count FROM channels");
   if (!existing || existing.count === 0) {
